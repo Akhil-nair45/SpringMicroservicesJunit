@@ -1,0 +1,41 @@
+package com.example.demo;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.example.demo.Model.Country;
+import com.example.demo.Repository.ModelRepo;
+import com.example.demo.Service.CountryService;
+import com.example.demo.Service.CountryServiceImpl;
+
+@SpringBootTest(classes= {ServiceMockitoTest.class})
+public class ServiceMockitoTest {
+	
+	@Mock
+	ModelRepo or;
+	
+	@InjectMocks
+	CountryServiceImpl  countryService;
+	
+	public List<Country> myCountries;
+	@Test
+	@Order(1)
+	public void getAllCountries() {
+		List<Country> myCountries= new ArrayList<Country>();
+		myCountries.add(new Country(1,"USA","NYC TIMES SQUARE"));
+		myCountries.add(new Country(4, "JAPAN","ANIME"));
+		
+		when( or.findAll()).thenReturn(myCountries);
+		assertEquals(4,countryService.getAllCountries().size());
+	}
+
+}

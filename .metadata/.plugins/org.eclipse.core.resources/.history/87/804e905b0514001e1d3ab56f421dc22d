@@ -1,0 +1,28 @@
+package com.example.demo;
+
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.example.demo.Repository.ModelRepo;
+import com.example.demo.Service.CountryService;
+
+@SpringBootTest(classes= {ServiceMockitoTest.class})
+public class ServiceMockitoTest {
+	
+	@Mock
+	ModelRepo or;
+	
+	@InjectMocks
+	CountryService countryService;
+	
+	@Test
+	@Order(1)
+	public void getAllCountries() {
+		when( or.findAll())
+		countryService.getAllCountries();
+	}
+
+}
